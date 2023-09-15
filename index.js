@@ -15,6 +15,12 @@ app.get("/video-data", (req, res) => {
   res.send(videoData);
 });
 
+app.get("/video-data/:id", (req, res) => {
+  const videoId = req.params.id;
+  const findVideo = videoData.find(({ id }) => id === videoId);
+  res.send(findVideo);
+});
+
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
