@@ -1,25 +1,20 @@
 // express
 const express = require("express");
 const app = express();
+const videoRoutes = require("./routes/videos");
 // dotenv
 require("dotenv").config();
 // cors
 const cors = require("cors");
 app.use(cors());
+// fs
+const fs = require("fs");
 // video data
 const videoData = require("./data/video-details.json");
 
 const { PORT, BACKEND_URL } = process.env;
 
-app.get("/video-data", (req, res) => {
-  res.send(videoData);
-});
-
-app.get("/video-data/:id", (req, res) => {
-  const videoId = req.params.id;
-  const findVideo = videoData.find(({ id }) => id === videoId);
-  res.send(findVideo);
-});
+app.use("/videos", videoRoutes);
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
