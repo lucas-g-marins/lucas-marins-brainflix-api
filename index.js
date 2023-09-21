@@ -14,6 +14,10 @@ const videoData = require("./data/video-details.json");
 
 const { PORT, BACKEND_URL } = process.env;
 
+app.use(express.json());
+
+app.use(express.static("public"));
+
 app.use("/", videoRoutes);
 
 app.listen(PORT, () => {
