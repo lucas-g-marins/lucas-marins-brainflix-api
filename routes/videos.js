@@ -26,6 +26,7 @@ router
     const existingVideos = JSON.parse(
       fs.readFileSync("data/video-details.json")
     );
+    videoData.push(newVideo);
     existingVideos.push(newVideo);
     fs.writeFile(
       "data/video-details.json",
