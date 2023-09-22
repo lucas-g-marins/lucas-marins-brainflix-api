@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const videoData = require("../data/video-details.json");
 const uID = require("uuid");
+const fs = require("fs");
 
 router
   .route("/videos")
@@ -9,7 +10,6 @@ router
     res.send(videoData);
   })
   .post((req, res) => {
-    console.log(req.body);
     const newVideo = {
       id: uID.v4(),
       title: req.body.title,
@@ -23,7 +23,20 @@ router
       timestamp: Date.now(),
       comments: [],
     };
-    console.log(newVideo);
+    const existingVideos = JSON.parse(
+      fs.readFileSync("data/video-details.json")
+    );
+    existingVideos.push(newVideo);
+    fs.writeFile(
+      "data/video-details.json",
+      JSON.stringify(existingVideos, null, 2),
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("video added");
+      }
+    );
   });
 
 router.get("/videos/:id", (req, res) => {
